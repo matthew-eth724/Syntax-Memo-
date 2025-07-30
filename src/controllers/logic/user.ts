@@ -3,7 +3,7 @@ import IUser from "../../types/user";
 import { Types } from "mongoose";
 
 export interface IUpdateUser {
-    user: IUser,
+    id: Types.ObjectId,
     data: Object
 }
 
@@ -26,7 +26,7 @@ export const createUser = async (data: ICreateUser): Promise<iUser> => {
     }
 }
 
-export const getUser = async (id: Types.ObjectId): Promise<iUser> => {
+export const readUser = async (id: Types.ObjectId): Promise<iUser> => {
     try {
         const user: iUser = await User.findById(id)
         return user
@@ -37,8 +37,8 @@ export const getUser = async (id: Types.ObjectId): Promise<iUser> => {
 
 export const updateUser = async (data: IUpdateUser): Promise<iUser> => {
     try {
-        const user: iUser = await User.findByIdAndUpdate(data.user.id, data.data)
-        const updatedUser: iUser = await User.findOne(data.data)
+        const user: iUser = await User.findByIdAndUpdate(data.id, data.data)
+        const updatedUser: iUser = await User.findById(data.data)
         return updatedUser
     } catch (error) {
         throw new Error(error)
