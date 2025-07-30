@@ -38,7 +38,7 @@ export const readUser = async (id: Types.ObjectId): Promise<iUser> => {
 export const updateUser = async (data: IUpdateUser): Promise<iUser> => {
     try {
         const user: iUser = await User.findByIdAndUpdate(data.id, data.data)
-        const updatedUser: iUser = await User.findById(data.data)
+        const updatedUser: iUser = await User.findOne(data.data)
         return updatedUser
     } catch (error) {
         throw new Error(error)
