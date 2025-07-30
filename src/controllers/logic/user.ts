@@ -7,6 +7,25 @@ export interface IUpdateUser {
     data: Object
 }
 
+export interface ICreateUser {
+    email: string,
+    passwordHash: string
+}
+
+export const createUser = async (data: ICreateUser): Promise<iUser> => {
+    try {
+        const newUser: iUser = new User({
+            email: data.email,
+            passwordHash: data.passwordHash
+        })
+
+        await newUser.save()
+        return newUser
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 export const getUser = async (id: Types.ObjectId): Promise<iUser> => {
     try {
         const user: iUser = await User.findById(id)
